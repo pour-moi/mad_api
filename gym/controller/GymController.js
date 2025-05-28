@@ -3,7 +3,7 @@ const Gym = require("../../common/models/Gym");
 module.exports = {
   getAllGyms: async (req, res) => {
     try {
-      const gyms = await Gym.findAll();
+      const gyms = await Gym.findAllGyms();
       res.status(200).json({ status: true, data: gyms });
     } catch (err) {
       res.status(500).json({ status: false, error: err });
@@ -12,7 +12,7 @@ module.exports = {
 
   getGym: async (req, res) => {
     try {
-      const gym = await Gym.findByPk(req.params.id);
+      const gym = await Gym.findGym(req.params.id);
       if (!gym)
         return res
           .status(404)
@@ -25,7 +25,7 @@ module.exports = {
 
   createGym: async (req, res) => {
     try {
-      const newGym = await Gym.create(req.body);
+      const newGym = await Gym.createGym(req.body);
       res.status(201).json({ status: true, data: newGym });
     } catch (err) {
       res.status(400).json({ status: false, error: err });
@@ -34,7 +34,7 @@ module.exports = {
 
   updateGym: async (req, res) => {
     try {
-      const [updated] = await Gym.update(req.body, {
+      const [updated] = await Gym.updateGym(req.body, {
         where: { id: req.params.id },
       });
       if (!updated)
@@ -49,7 +49,7 @@ module.exports = {
 
   deleteGym: async (req, res) => {
     try {
-      const deleted = await Gym.destroy({ where: { id: req.params.id } });
+      const deleted = await Gym.deleteGym({ where: { id: req.params.id } });
       if (!deleted)
         return res
           .status(404)

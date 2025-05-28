@@ -5,7 +5,7 @@ app.use(express.json());
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: "./storage/data.db",
+  storage: "./storage/data.sqlite",
 });
 
 const User = require("./common/models/User");

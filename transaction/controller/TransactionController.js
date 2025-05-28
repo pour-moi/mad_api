@@ -2,13 +2,13 @@ const Transaction = require("../../common/models/Transaction");
 
 module.exports = {
   getAllTransactions: (req, res) => {
-    Transaction.findAll()
+    Transaction.findAllTransactions()
       .then((txs) => res.status(200).json({ status: true, data: txs }))
       .catch((err) => res.status(500).json({ status: false, error: err }));
   },
 
   getTransaction: (req, res) => {
-    Transaction.findByPk(req.params.id)
+    Transaction.findTransaction(req.params.id)
       .then((tx) => {
         if (!tx)
           return res
@@ -20,13 +20,13 @@ module.exports = {
   },
 
   createTransaction: (req, res) => {
-    Transaction.create(req.body)
+    Transaction.createTransaction(req.body)
       .then((tx) => res.status(201).json({ status: true, data: tx }))
       .catch((err) => res.status(400).json({ status: false, error: err }));
   },
 
   updateTransaction: (req, res) => {
-    Transaction.update(req.body, { where: { id: req.params.id } })
+    Transaction.updateTransaction(req.body, { where: { id: req.params.id } })
       .then(([affected]) => {
         if (!affected)
           return res
@@ -38,7 +38,7 @@ module.exports = {
   },
 
   deleteTransaction: (req, res) => {
-    Transaction.destroy({ where: { id: req.params.id } })
+    Transaction.deleteTransaction({ where: { id: req.params.id } })
       .then((deleted) => {
         if (!deleted)
           return res

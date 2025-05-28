@@ -2,7 +2,7 @@ const Role = require("../../common/models/Role");
 
 module.exports = {
   getAllRoles: (req, res) => {
-    Role.findAll()
+    Role.findAllRoles()
       .then((roles) => res.status(200).json({ status: true, data: roles }))
       .catch((err) => res.status(500).json({ status: false, error: err }));
   },
@@ -20,13 +20,13 @@ module.exports = {
   },
 
   createRole: (req, res) => {
-    Role.create(req.body)
+    Role.createRole(req.body)
       .then((role) => res.status(201).json({ status: true, data: role }))
       .catch((err) => res.status(400).json({ status: false, error: err }));
   },
 
   updateRole: (req, res) => {
-    Role.update(req.body, { where: { id: req.params.id } })
+    Role.updateRole(req.body, { where: { id: req.params.id } })
       .then(([affected]) => {
         if (!affected)
           return res
@@ -38,7 +38,7 @@ module.exports = {
   },
 
   deleteRole: (req, res) => {
-    Role.destroy({ where: { id: req.params.id } })
+    Role.deleteRole({ where: { id: req.params.id } })
       .then((deleted) => {
         if (!deleted)
           return res
